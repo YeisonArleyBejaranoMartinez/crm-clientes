@@ -1,7 +1,9 @@
 import React from "react";
-import { useNavigate, Form,useActionData } from "react-router-dom";
+import { useNavigate, Form,useActionData, redirect } from "react-router-dom";
 import Error from "../components/Error";
 import Formulario from "../components/Formulario";
+import { agregarClientes } from "../data/Clientes";
+
 
 
 export async function action({request}) {
@@ -22,12 +24,12 @@ if (!regex.test(email)) {
   if(Object.keys(errores).length){
     return errores;
   }
+  await agregarClientes(datos);
+  return  redirect("/")
 }
 
 const NuevoCliente = () => {
-
   const errores = useActionData();
-  console.log(errores);
   const navigate = useNavigate();
   return (
     <>
